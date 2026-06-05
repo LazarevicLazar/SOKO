@@ -3,7 +3,7 @@
 	url = https://github.com/jameshoweee/online-offline-sigs
 [submodule "OO-ML-DSA"]
 	path = submodules/OO-ML-DSA
-	url = https://github.com/kydahe/Beskar
+	url = https://github.com/kydahe/Beskar/tree/f55d4226235a4d4301faded1c8366ab628fd627e/dilithium
 	branch = main
 [submodule "ML-DSA"]
 	path = submodules/ML-DSA
