@@ -43,13 +43,22 @@ SOKO/
 
 ## External Dependency
 
-The build scripts expect the FN-DSA/OO-FN-DSA dependency tree at the sibling path below:
+The build scripts expect dependency sources under this in-repo location:
 
 ```text
 /submodules/OO-FN-DSA/falcon-lazy
 ```
 
-That path is referenced directly by the scripts under `scripts/`. If you package this artifact separately, preserve that relative location or update the `FALCON_DIR` variable in the build helpers.
+Primary dependency roots used by the benchmark suite:
+
+```text
+/submodules/FN-DSA
+/submodules/ML-DSA
+/submodules/OO-FN-DSA
+/submodules/OO-ML-DSA
+```
+
+These paths are referenced directly by scripts under `scripts/` and by include paths in `benchmarks/`.
 
 ## Platform Notes
 
@@ -63,13 +72,14 @@ That path is referenced directly by the scripts under `scripts/`. If you package
 From the `SOKO/` directory:
 
 ```sh
+git submodule update --init --recursive
 sh scripts/build_soko_token_benchmark.sh --check-gpu-env
 sh scripts/run_soko_token_benchmark.sh
 sh scripts/build_soko_refill_simulator.sh
 ./build/soko_refill_simulator.exe --rates 1024,2048,4096 --consume-target 327680
 ```
 
-The first command only checks tool availability. The second builds and runs the main benchmark in GPU-required mode and writes a CSV under `build/` by default.
+The first command initializes nested dependency submodules (required for all benchmark variants, including OO-Ed25519). The second command only checks tool availability. The third builds and runs the main benchmark in GPU-required mode and writes a CSV under `build/` by default.
 
 ## Reproducing The Main Results
 
