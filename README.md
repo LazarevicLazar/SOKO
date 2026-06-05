@@ -18,13 +18,22 @@ At a high level, SOKO moves message-independent FN-DSA precomputation off the la
 ```text
 SOKO/
 ├── benchmarks/
+│   ├── bench_cert_dilithium.c
+│   ├── bench_cert_ed25519.c
+│   ├── bench_cert_falcon.c
+│   ├── bench_cert_oodilithium.c
+│   ├── bench_cert_ooed25519.c
+│   ├── bench_cert_oofalcon.c
+│   ├── bench_oofalcon_gpu_tokens.c
+│   ├── soko_refill_simulator.c
 │   ├── soko_token_benchmark.c
-│   └── soko_refill_simulator.c
+│   └── README.md
 ├── cuda/
 │   ├── soko_gpu_offline.cu
 │   └── soko_gpu_offline.h
 ├── include/
-│   └── soko_falcon_backends.h
+│   ├── soko_falcon_backends.h
+│   └── oo_ed25519.h
 ├── scripts/
 │   ├── build_soko_token_benchmark.sh
 │   ├── run_soko_token_benchmark.sh
@@ -35,7 +44,8 @@ SOKO/
 │       ├── soko_falcon_common.c
 │       ├── soko_cpu_backend.c
 │       ├── soko_cpumt_backend.c
-│       └── soko_gpu_backend.c
+│       ├── soko_gpu_backend.c
+│       └── oo_ed25519.c
 └── build/
 ```
 

@@ -99,19 +99,21 @@ build_ooed25519() {
     TARGET="bench_cert_ooed25519"
     SRC="$BENCH_DIR/$TARGET.c"
     ED25519_DIR="$ROOT_DIR/submodules/OO-FN-DSA/ed25519/src"
+    OOED_IMPL="$ROOT_DIR/src/backends/oo_ed25519.c"
+    OOED_HDR="$ROOT_DIR/include/oo_ed25519.h"
 
     echo "===== Building: Online-Offline Ed25519 Certificate Chain Benchmark ====="
     ensure_file "$SRC"
     ensure_dir "$ED25519_DIR"
 
-    if [ ! -f "$ROOT_DIR/oo_ed25519.c" ] || [ ! -f "$ROOT_DIR/oo_ed25519.h" ]; then
-        echo "Missing oo_ed25519.c/oo_ed25519.h in repository root." >&2
+    if [ ! -f "$OOED_IMPL" ] || [ ! -f "$OOED_HDR" ]; then
+        echo "Missing include/oo_ed25519.h or src/backends/oo_ed25519.c." >&2
         echo "This target cannot be built until OO-Ed25519 implementation files are added." >&2
         return 1
     fi
 
-    $CC $CFLAGS -I"$ROOT_DIR" -I"$ED25519_DIR" -c "$SRC" -o "$BUILD_DIR/$TARGET.o"
-    $CC $CFLAGS -I"$ROOT_DIR" -I"$ED25519_DIR" -c "$ROOT_DIR/oo_ed25519.c" -o "$BUILD_DIR/oo_ed25519.o"
+    $CC $CFLAGS -I"$ROOT_DIR" -I"$ROOT_DIR/include" -I"$ED25519_DIR" -c "$SRC" -o "$BUILD_DIR/$TARGET.o"
+    $CC $CFLAGS -I"$ROOT_DIR" -I"$ROOT_DIR/include" -I"$ED25519_DIR" -c "$OOED_IMPL" -o "$BUILD_DIR/oo_ed25519.o"
     $CC $CFLAGS -I"$ED25519_DIR" -c "$ED25519_DIR/fe.c" -o "$BUILD_DIR/ooed_fe.o"
     $CC $CFLAGS -I"$ED25519_DIR" -c "$ED25519_DIR/ge.c" -o "$BUILD_DIR/ooed_ge.o"
     $CC $CFLAGS -I"$ED25519_DIR" -c "$ED25519_DIR/sc.c" -o "$BUILD_DIR/ooed_sc.o"
@@ -254,7 +256,7 @@ show_menu() {
     echo "============================================"
     echo "  1) ml-dsa       Certificate benchmark"
     echo "  2) ed25519      Certificate benchmark"
-    echo "  3) ooed25519    Certificate benchmark (requires oo_ed25519.c/h)"
+    echo "  3) ooed25519    Certificate benchmark (requires include/oo_ed25519.h and src/backends/oo_ed25519.c)"
     echo "  4) falcon       Certificate benchmark"
     echo "  5) oo-ml-dsa    Certificate benchmark"
     echo "  6) oofalcon     Certificate benchmark"

@@ -8,6 +8,7 @@ Files:
 - `soko_cpumt_backend.c`: OpenMP-based multi-threaded CPU offline presign generation.
 - `soko_gpu_backend.c`: dynamic loader and wrapper layer for the GPU helper DLL.
 - `soko_falcon_pipeline.c`: backend-owned ring buffer and async refill pipeline used by the SOKO steady-state path.
+- `oo_ed25519.c`: OO-Ed25519 helper implementation used by the certificate-chain benchmark.
 
 Design note:
 - The goal of this directory is to separate implementation from measurement harnesses.
