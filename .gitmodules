@@ -1,3 +1,20 @@
-[submodule "online-offline-sigs"]
-	path = online-offline-sigs
+[submodule "OO-FN-DSA"]
+	path = submodules/OO-FN-DSA
 	url = https://github.com/jameshoweee/online-offline-sigs
+[submodule "OO-ML-DSA"]
+	path = submodules/OO-ML-DSA
+	url = https://github.com/kydahe/Beskar
+	branch = main
+[submodule "ML-DSA"]
+	path = submodules/ML-DSA
+	url = https://github.com/pq-crystals/dilithium
+[submodule "submodules/OO-FN-DSA"]
+	path = submodules/OO-FN-DSA
+	url = https://github.com/jameshoweee/online-offline-sigs
+[submodule "submodules/OO-ML-DSA"]
+	path = submodules/OO-ML-DSA
+	url = https://github.com/kydahe/Beskar
+	branch = main
+[submodule "submodules/ML-DSA"]
+	path = submodules/ML-DSA
+	url = https://github.com/pq-crystals/dilithium
