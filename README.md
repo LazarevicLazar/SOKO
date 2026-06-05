@@ -46,7 +46,7 @@ SOKO/
 The build scripts expect the FN-DSA/OO-FN-DSA dependency tree at the sibling path below:
 
 ```text
-/online-offline-sigs/falcon-lazy
+/submodules/OO-FN-DSA/falcon-lazy
 ```
 
 That path is referenced directly by the scripts under `scripts/`. If you package this artifact separately, preserve that relative location or update the `FALCON_DIR` variable in the build helpers.

@@ -17,7 +17,7 @@ BENCH_DIR="$ROOT_DIR/benchmarks"
 INCLUDE_DIR="$ROOT_DIR/include"
 BACKEND_DIR="$ROOT_DIR/src/backends"
 CUDA_DIR="$ROOT_DIR/cuda"
-FALCON_DIR="$ROOT_DIR/../online-offline-sigs-(precomputed Falcon)/falcon-lazy"
+FALCON_DIR="$ROOT_DIR/submodules/OO-FN-DSA/falcon-lazy"
 TARGET="bench_oofalcon_gpu_tokens"
 
 GPU_DEFS=""
