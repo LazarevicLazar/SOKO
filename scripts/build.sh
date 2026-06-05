@@ -20,7 +20,7 @@ CFLAGS="-Wall -Wextra -O3 -fomit-frame-pointer ${USER_CFLAGS}"
 LDFLAGS="${USER_LDFLAGS}"
 
 DILITHIUM_STD_DIR="$ROOT_DIR/submodules/ML-DSA/ref"
-DILITHIUM_OO_DIR="$ROOT_DIR/submodules/OO-ML-DSA/ref"
+DILITHIUM_OO_DIR="$ROOT_DIR/submodules/OO-ML-DSA/dilithium/ref"
 FALCON_STD_DIR="$ROOT_DIR/submodules/FN-DSA"
 OO_FALCON_DIR="$ROOT_DIR/submodules/OO-FN-DSA/falcon-lazy"
 
@@ -98,9 +98,11 @@ build_ed25519() {
 build_ooed25519() {
     TARGET="bench_cert_ooed25519"
     SRC="$BENCH_DIR/$TARGET.c"
+    ED25519_DIR="$ROOT_DIR/submodules/OO-FN-DSA/ed25519/src"
 
     echo "===== Building: Online-Offline Ed25519 Certificate Chain Benchmark ====="
     ensure_file "$SRC"
+    ensure_dir "$ED25519_DIR"
 
     if [ ! -f "$ROOT_DIR/oo_ed25519.c" ] || [ ! -f "$ROOT_DIR/oo_ed25519.h" ]; then
         echo "Missing oo_ed25519.c/oo_ed25519.h in repository root." >&2
@@ -108,10 +110,20 @@ build_ooed25519() {
         return 1
     fi
 
-    $CC $CFLAGS -I"$ROOT_DIR" -c "$SRC" -o "$BUILD_DIR/$TARGET.o"
-    $CC $CFLAGS -I"$ROOT_DIR" -c "$ROOT_DIR/oo_ed25519.c" -o "$BUILD_DIR/oo_ed25519.o"
+    $CC $CFLAGS -I"$ROOT_DIR" -I"$ED25519_DIR" -c "$SRC" -o "$BUILD_DIR/$TARGET.o"
+    $CC $CFLAGS -I"$ROOT_DIR" -I"$ED25519_DIR" -c "$ROOT_DIR/oo_ed25519.c" -o "$BUILD_DIR/oo_ed25519.o"
+    $CC $CFLAGS -I"$ED25519_DIR" -c "$ED25519_DIR/fe.c" -o "$BUILD_DIR/ooed_fe.o"
+    $CC $CFLAGS -I"$ED25519_DIR" -c "$ED25519_DIR/ge.c" -o "$BUILD_DIR/ooed_ge.o"
+    $CC $CFLAGS -I"$ED25519_DIR" -c "$ED25519_DIR/sc.c" -o "$BUILD_DIR/ooed_sc.o"
+    $CC $CFLAGS -I"$ED25519_DIR" -c "$ED25519_DIR/sha512.c" -o "$BUILD_DIR/ooed_sha512.o"
+    $CC $CFLAGS -I"$ED25519_DIR" -c "$ED25519_DIR/keypair.c" -o "$BUILD_DIR/ooed_keypair.o"
+    $CC $CFLAGS -I"$ED25519_DIR" -c "$ED25519_DIR/sign.c" -o "$BUILD_DIR/ooed_sign.o"
+    $CC $CFLAGS -I"$ED25519_DIR" -c "$ED25519_DIR/verify.c" -o "$BUILD_DIR/ooed_verify.o"
     $CC $CFLAGS $LDFLAGS -o "$BUILD_DIR/$TARGET.exe" \
-        "$BUILD_DIR/$TARGET.o" "$BUILD_DIR/oo_ed25519.o" -lsodium
+        "$BUILD_DIR/$TARGET.o" "$BUILD_DIR/oo_ed25519.o" \
+        "$BUILD_DIR/ooed_fe.o" "$BUILD_DIR/ooed_ge.o" "$BUILD_DIR/ooed_sc.o" \
+        "$BUILD_DIR/ooed_sha512.o" "$BUILD_DIR/ooed_keypair.o" \
+        "$BUILD_DIR/ooed_sign.o" "$BUILD_DIR/ooed_verify.o"
 
     echo "  -> $BUILD_DIR/$TARGET.exe"
 }

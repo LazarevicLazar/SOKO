@@ -37,9 +37,9 @@ static inline double get_time() {
 #define TOCK(start) (((double)clock() / CLOCKS_PER_SEC) - (start))
 #endif
 
-#include "submodules/OO-ML-DSA/ref/sign.h"
-#include "submodules/OO-ML-DSA/ref/params.h"
-#include "submodules/OO-ML-DSA/ref/randombytes.h"
+#include "submodules/OO-ML-DSA/dilithium/ref/sign.h"
+#include "submodules/OO-ML-DSA/dilithium/ref/params.h"
+#include "submodules/OO-ML-DSA/dilithium/ref/randombytes.h"
 
 /* Configuration */
 #define MSG_SIZE 512

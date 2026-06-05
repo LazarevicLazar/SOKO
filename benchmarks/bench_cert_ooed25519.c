@@ -34,8 +34,6 @@ static inline double get_time() {
 #define TOCK(start) (((double)clock() / CLOCKS_PER_SEC) - (start))
 #endif
 
-#include <sodium.h>
-
 #include "oo_ed25519.h"
 
 /* Configuration */
@@ -356,8 +354,9 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    srand((unsigned)time(NULL));
     for (i = 0; i < MSG_SIZE; i++) {
-        message[i] = (uint8_t)randombytes_random();
+        message[i] = (uint8_t)(rand() & 0xFF);
     }
 
     printf("================================================================================\n");
